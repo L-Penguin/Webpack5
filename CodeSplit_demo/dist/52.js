@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkCodeSplit_demo1=self.webpackChunkCodeSplit_demo1||[]).push([[52],{52:(e,t,u)=>{u.d(t,{S:()=>c});const c=function(...e){return e.reduce(((e,t)=>e+t),0)}}}]);
