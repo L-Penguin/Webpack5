@@ -170,8 +170,8 @@ module.exports = {
                     implementation: ImageMinimizerPlugin.imageminGenerate,
                     options: {
                         plugins: [
-                            ["gifsicle", { interlacked: true }],
-                            ["jepgtran", { progressive: true }],
+                            ["gifsicle", { interlaced: true }],
+                            ["jpegtran", { progressive: true }],
                             ["optipng", { optimizationLevel: 5 }],
                             [
                                 "svgo",

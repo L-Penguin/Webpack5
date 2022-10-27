@@ -2,6 +2,9 @@ courseware
 
 code
 
-webpack_code/node_modules
 
-CodeSplit_demo/node_modules
+**/node_modules
+
+**/dist
+
+**/package-lock.json
