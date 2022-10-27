@@ -1,11 +1,12 @@
-const path = require("path")
+const path = require("path");
+const { DefinePlugin } = require("webpack");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const { VueLoaderPlugin } = require('vue-loader');
 
 function getStyleLoader(pre) {
     return [
-        "style-loader",
+        "vue-style-loader",
         "css-loader",
         {
             // 处理css样式兼容性问题
@@ -73,10 +74,11 @@ module.exports = {
                 options: {
                     cacheDirectory: true,
                     cacheCompression: false,
-                    plugins: [
-                        "react-refresh/babel"   // 激活js的HMR
-                    ]
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: "vue-loader",
             }
         ]
     },
@@ -90,7 +92,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "../public/index.html"),
         }),
-        new ReactRefreshWebpackPlugin(),    // 激活js的HMR                       
+        new VueLoaderPlugin(),
+        // cross-env定义的环境变量是给webpack打包工具使用
+        // DefinePlugin定义的环境变量是给源代码使用，从而解决vue3页面警告问题
+        new DefinePlugin({
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__ : false
+        })       
     ],
     optimization: {
         splitChunks: {
@@ -105,7 +113,7 @@ module.exports = {
     // webpack解析模块加载选项
     resolve: {
         // 自动补全文件扩展名
-        extensions: ['.jsx', '.js', '.json'],
+        extensions: ['.vue', '.js', '.json'],
     },
     devServer: {
         host: "localhost",
